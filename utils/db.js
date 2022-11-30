@@ -9,12 +9,7 @@ const config =  require('../config');
 //   password: "",
 // });
 
-// const pool = mysql.createPool({
-//   host: "localhost",
-//   user: "versavvy_proPlast",
-//   database: "versavvy_sales",
-//   password: "J-OJ{&%hE9gv",
-// });
+
 
 const pool = mysql.createPool({
   host: "localhost",
