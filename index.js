@@ -8,10 +8,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 app.use(routes);
 
-console.log("here is sales");
+console.log("here is sales"+ port);
 
 app.listen(port);
