@@ -1,11 +1,23 @@
 const db = require("../utils/db");
 const axios = require("axios");
+const wareAxios = require("../midelware/warehouseaxios")
 
 module.exports = class salesOrder {
   static uniqueId() {
     const dateString = Date.now().toString(36);
     const randomness = Math.random().toString(36).substr(2);
     return dateString + randomness;
+  }
+
+  static showSalesId(id) {
+    return db
+      .execute("SELECT * FROM sales_order WHERE id = '" + id + "'")
+      .then((respo) => {
+        return [true, respo[0]];
+      })
+      .catch((err) => {
+        return [false, err];
+      });
   }
   static addSalesOrder(data) {
     var IDgenerator = this.uniqueId();
@@ -39,20 +51,26 @@ module.exports = class salesOrder {
       });
   }
 
-  static sendtoWareHouse(data, ID) {
+  static async sendtoWareHouse(data, ID) {
     data.mat_requestdate = "";
     data.mat_requestdept = "SALES";
     data.req_materialtype = "FIN";
-    console.log("wareHouse", data);
-    return axios
-      .post("https://versavvy.com/ERP_backend/wareHouse/StoreRequestion", {
-        material: data,
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((e) => {
-        return e;
+    await db
+      .execute("SELECT id FROM sales_order WHERE unique_id ='" + ID + "'")
+      .then(async (respo) => {
+        console.log(respo[0][0].id)
+        data.SalesId = respo[0][0].id;
+        console.log("wareHouse", data);
+        await wareAxios
+          .post("/StoreRequestion", {
+            material: data,
+          })
+          .then((response) => {
+            return response;
+          })
+          .catch((e) => {
+            return e;
+          });
       });
   }
 

@@ -52,6 +52,19 @@ module.exports = class salesStore {
       });
   }
 
+  static async completeSales(ID) {
+    return await db
+      .execute(
+        "UPDATE sales_order SET status = 'COMPLETED' WHERE id='" + ID + "'"
+      )
+      .then((respo) => {
+        return [true, respo];
+      })
+      .catch((err) => {
+        return [false, err];
+      });
+  }
+
   static makeHold(itemHold) {
     return db
       .execute(

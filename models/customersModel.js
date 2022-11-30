@@ -1,7 +1,6 @@
 const db = require("../utils/db");
 
 module.exports = class customers {
-
   static addNewCustomers(customersData) {
     return db
       .execute(
@@ -25,10 +24,10 @@ module.exports = class customers {
     return db
       .execute("SELECT * FROM customers_list")
       .then((result) => {
-        return result[0];
+        return [true, result[0]];
       })
       .catch((err) => {
-        console.log(err);
+        return [false, err];
       });
   }
 };
