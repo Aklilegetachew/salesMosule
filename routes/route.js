@@ -17,6 +17,7 @@ router.post("/addFinRequest", requestForm.finishedMaterialRequest);
 
 router.get("/showAcceptedRequestions", requestForm.showStatus);
 router.post("/makeSale", storeRelease.makeSales);
+router.post("/makeComplete", storeRelease.makeComplete);
 
 router.post("/confirmStoreRelease", storeRelease.confirmRelease);
 
@@ -25,4 +26,5 @@ router.get("/salesSummery", summery.showAllSummery);
 router.post("/creatSalesOrder", salesOrder.creatSalesOrder);
 router.get("/showSalesOrder", salesOrder.showSalesOrder);
 router.post("/showSalesOrderById", salesOrder.showSalesOrderById);
+router.post("/selectSalesOrder", salesOrder.selectSalesOrder)
 module.exports = router;

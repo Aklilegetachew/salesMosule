@@ -1,10 +1,11 @@
 const db = require("../utils/db");
 const axios = require("axios");
+const wareAxios = require("../midelware/warehouseaxios")
 
 module.exports = class salesRequest {
   static async addRequest(requestBody) {
-    return await axios
-      .post("https://versavvy.com/ERP_backend/wareHouse/StoreRequestion", {
+    return await wareAxios
+      .post("/StoreRequestion", {
         material: requestBody,
       })
       .then((res) => {
@@ -16,8 +17,8 @@ module.exports = class salesRequest {
   }
 
   static async addStatus() {
-    return await axios
-      .get("https://versavvy.com/ERP_backend/wareHouse/StoreRequestion", {
+    return await wareAxios
+      .get("/StoreRequestion", {
         material: requestBody,
       })
       .then((res) => {
